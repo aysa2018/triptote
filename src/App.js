@@ -1,6 +1,7 @@
 // src/App.js
 import React, { useState } from 'react';
 import './App.css';
+import { motion } from 'framer-motion';
 import Header from './components/Header';
 import TripForm from './components/TripForm';
 import PackingList from './components/PackingList';
@@ -55,7 +56,7 @@ function App() {
     }
 
     setPackingList({ fundamentals, clothing, toiletries, extras });
-    fetchWeather(destination);
+    fetchWeather(destination); // Fetch weather data after generating packing list
   };
 
   const fetchWeather = (destination) => {
@@ -80,12 +81,42 @@ function App() {
       });
   };
 
+  // State for theme and mood
+  const [theme, setTheme] = useState('light'); // Light or dark theme
+  const [mood, setMood] = useState('calm'); // Mood themes
+
+  const toggleTheme = () => setTheme(theme === 'light' ? 'dark' : 'light');
+  const changeMood = (newMood) => setMood(newMood);
+
   return (
-    <div className="App">
+    <div className={`App ${theme} ${mood}`} data-theme={theme}>
       <Header />
-      <TripForm onTripSubmit={generatePackingList} />
-      <WeatherInfo weatherData={weatherData} hasFetchedWeather={hasFetchedWeather} />
-      <PackingList packingList={packingList} />
+      <div className="theme-toggle">
+        <motion.button
+          whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 0.9 }}
+          onClick={toggleTheme}
+        >
+          Toggle {theme === 'light' ? 'Dark' : 'Light'} Mode
+        </motion.button>
+        <div className="mood-buttons">
+          <motion.button
+            whileHover={{ scale: 1.1 }}
+            onClick={() => changeMood('calm')}
+          >
+            Calm
+          </motion.button>
+          <motion.button
+            whileHover={{ scale: 1.1 }}
+            onClick={() => changeMood('vibrant')}
+          >
+            Vibrant
+          </motion.button>
+        </div>
+      </div>
+      <TripForm onTripSubmit={generatePackingList} /> {/* Pass generatePackingList */}
+      <WeatherInfo weatherData={weatherData} hasFetchedWeather={hasFetchedWeather} /> {/* Pass weatherData */}
+      <PackingList packingList={packingList} /> {/* Pass packingList */}
     </div>
   );
 }

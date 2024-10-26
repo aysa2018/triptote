@@ -250,3 +250,31 @@ form button:hover {
     font-size: 1.5em;
   }
 }
+
+
+
+
+/* Theme and Mood Toggle Buttons */
+.theme-toggle {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.theme-toggle button,
+.mood-buttons button {
+  background-color: var(--accent-color);
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  font-size: 1em;
+  cursor: pointer;
+  transition: background 0.3s, transform 0.3s;
+}
+
+.theme-toggle button:hover {
+  background-color: var(--text-color);
+  color: var(--accent-color);
+  transform: scale(1.05);
+}

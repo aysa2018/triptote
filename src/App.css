@@ -102,6 +102,16 @@ form button:hover {
   margin-bottom: 15px;
 }
 
+.PackingList section {
+  margin-bottom: 20px;
+}
+
+.PackingList h3 {
+  color: #333;
+  font-size: 1.2em;
+  margin-bottom: 10px;
+}
+
 .PackingList ul {
   list-style-type: none;
   padding: 0;

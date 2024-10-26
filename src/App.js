@@ -7,80 +7,58 @@ import PackingList from './components/PackingList';
 import WeatherInfo from './components/WeatherInfo';
 
 function App() {
-  const [packingList, setPackingList] = useState([]);
+  const [packingList, setPackingList] = useState({
+    fundamentals: [],
+    clothing: [],
+    toiletries: [],
+    extras: []
+  });
   const [weatherData, setWeatherData] = useState(null);
+  const [hasFetchedWeather, setHasFetchedWeather] = useState(false);
 
   const generatePackingList = ({ destination, startDate, endDate, tripType }) => {
-    // Expanded base items organized by categories
-    const baseItems = [
-      "Toothbrush", "Toothpaste", "Shampoo", "Body Wash", "Deodorant", 
-      "Charger", "Phone", "Passport/ID", "Wallet", "Sunglasses", 
-      "Reusable Water Bottle", "Hand Sanitizer", "Medications", "Face Mask"
+    setHasFetchedWeather(true);
+
+    const fundamentals = [
+      "Passport/ID", "Wallet", "Phone", "Charger", "Reusable Water Bottle",
+      "Medications", "Sunglasses", "Face Mask", "Hand Sanitizer"
     ];
 
-    let tripSpecificItems = [];
+    const clothing = ["T-Shirts", "Pants/Shorts", "Jacket", "Underwear", "Socks"];
 
+    const toiletries = ["Toothbrush", "Toothpaste", "Shampoo", "Body Wash", "Deodorant"];
+
+    let extras = [];
+
+    // Add items based on trip type
     switch (tripType) {
       case "beach":
-        tripSpecificItems = [
-          "Swimsuit", "Sunscreen", "Flip Flops", "Beach Towel", 
-          "Beach Umbrella", "Snorkel Gear", "Beach Bag", "Sunglasses"
-        ];
+        extras = ["Swimsuit", "Beach Towel", "Sunscreen", "Flip Flops"];
         break;
       case "city":
-        tripSpecificItems = [
-          "Comfortable Walking Shoes", "Casual Outfits", "Portable Charger", 
-          "City Guidebook", "Camera", "Small Backpack", "Umbrella"
-        ];
+        extras = ["Comfortable Shoes", "Guidebook", "Camera"];
         break;
       case "hiking":
-        tripSpecificItems = [
-          "Hiking Boots", "Water Bottle", "First Aid Kit", "Backpack", 
-          "Trail Map", "Compass", "Hiking Snacks", "Rain Jacket"
-        ];
+        extras = ["Hiking Boots", "Backpack", "Trail Map", "First Aid Kit"];
         break;
       case "business":
-        tripSpecificItems = [
-          "Formal Attire", "Laptop", "Notebooks", "Business Cards", 
-          "Dress Shoes", "Planner", "Pen", "Portable Charger"
-        ];
+        extras = ["Formal Attire", "Laptop", "Notebook", "Business Cards"];
         break;
       case "family":
-        tripSpecificItems = [
-          "Snacks for Kids", "Board Games", "Extra Towels", "First Aid Kit", 
-          "Wet Wipes", "Kid-Friendly Sunscreen", "Portable Cooler", "Travel Pillow"
-        ];
+        extras = ["Snacks for Kids", "Board Games", "Extra Towels"];
         break;
       case "friends":
-        tripSpecificItems = [
-          "Portable Speaker", "Games", "Extra Snacks", "Cooler", 
-          "Party Games", "Disposable Camera", "Sunglasses", "Hat"
-        ];
-        break;
-      case "camping":
-        tripSpecificItems = [
-          "Tent", "Sleeping Bag", "Portable Stove", "Lantern", 
-          "Bug Spray", "Camping Chair", "Fire Starter", "Camping Cooler"
-        ];
-        break;
-      case "road-trip":
-        tripSpecificItems = [
-          "Snacks", "Maps/GPS", "Car Charger", "Cooler", 
-          "Blanket", "Travel Pillow", "Spare Car Key", "First Aid Kit"
-        ];
+        extras = ["Portable Speaker", "Games", "Cooler"];
         break;
       default:
-        tripSpecificItems = [];
+        extras = [];
     }
 
-    const initialPackingList = [...baseItems, ...tripSpecificItems];
-    setPackingList(initialPackingList);
-
-    // Fetch weather data
-    fetchWeather(destination, initialPackingList);
+    setPackingList({ fundamentals, clothing, toiletries, extras });
+    fetchWeather(destination);
   };
 
-  const fetchWeather = (destination, initialPackingList) => {
+  const fetchWeather = (destination) => {
     fetch(`https://api.tomorrow.io/v4/timelines?location=${destination}&fields=temperature&timesteps=1d&units=metric&apikey=${process.env.REACT_APP_TOMORROW_API_KEY}`)
       .then(response => response.json())
       .then(data => {
@@ -91,7 +69,6 @@ function App() {
             description: "Temperature",
             temp: weatherInfo.temperature.toFixed(1),
           });
-          adjustPackingList(initialPackingList, weatherInfo.temperature, weatherInfo.description);
         } else {
           console.error('Weather data not available for this location.');
           setWeatherData(null);
@@ -103,32 +80,12 @@ function App() {
       });
   };
 
-  const adjustPackingList = (initialPackingList, temperature, description) => {
-    const updatedItems = [...initialPackingList];
-
-    // Adjust items based on temperature
-    if (temperature <= 5) {
-      updatedItems.push("Heavy Jacket", "Thermal Socks", "Gloves");
-    } else if (temperature <= 15) {
-      updatedItems.push("Light Jacket", "Sweater");
-    } else if (temperature >= 25) {
-      updatedItems.push("Hat", "Sunglasses", "Water Bottle");
-    }
-
-    // Adjust items based on weather description
-    if (description && description.toLowerCase().includes("rain")) {
-      updatedItems.push("Umbrella", "Raincoat");
-    }
-
-    setPackingList(updatedItems);
-  };
-
   return (
     <div className="App">
       <Header />
       <TripForm onTripSubmit={generatePackingList} />
-      <WeatherInfo weatherData={weatherData} />
-      <PackingList items={packingList} />
+      <WeatherInfo weatherData={weatherData} hasFetchedWeather={hasFetchedWeather} />
+      <PackingList packingList={packingList} />
     </div>
   );
 }

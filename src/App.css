@@ -254,15 +254,14 @@ form button:hover {
 
 
 
-/* Theme and Mood Toggle Buttons */
-.theme-toggle {
+/* Season Toggle Buttons */
+.season-buttons {
   display: flex;
   gap: 10px;
   margin-bottom: 20px;
 }
 
-.theme-toggle button,
-.mood-buttons button {
+.season-buttons button {
   background-color: var(--accent-color);
   color: white;
   padding: 10px 20px;
@@ -273,48 +272,55 @@ form button:hover {
   transition: background 0.3s, transform 0.3s;
 }
 
-.theme-toggle button:hover {
+.season-buttons button:hover {
   background-color: var(--text-color);
   color: var(--accent-color);
   transform: scale(1.05);
 }
 
-/* Default Light Theme */
+/* Default Season Theme (Spring) */
 :root {
   --bg-gradient: linear-gradient(135deg, #e0f7fa, #e0f2f1);
   --text-color: #333;
   --accent-color: #3a8f99;
 }
 
-/* Dark Theme */
-[data-theme="dark"] {
-  --bg-gradient: linear-gradient(135deg, #1e1e1e, #323232);
-  --text-color: #f0f0f0;
-  --accent-color: #327b82;
+/* Spring Theme */
+.spring {
+  --bg-gradient: linear-gradient(135deg, #FFE1FF, #E4B1F0);
+  --accent-color: #7E60BF;
+  --text-color: #433878;
 }
 
-/* Calm Mood Theme */
-.calm {
-  --bg-gradient: linear-gradient(135deg, #f3e7e9, #e3eeff);
-  --accent-color: #a1c4fd;
-  --text-color: #555;
+/* Summer Theme */
+.summer {
+  --bg-gradient: linear-gradient(135deg, #ffe082, #ffb74d);
+  --accent-color: #ffa726;
+  --text-color: #333;
 }
 
-/* Vibrant Mood Theme */
-.vibrant {
-  --bg-gradient: linear-gradient(135deg, #ff9a8b, #ff6a88);
-  --accent-color: #ff4081;
-  --text-color: #fff;
+/* Autumn Theme */
+.autumn {
+  --bg-gradient: linear-gradient(135deg, #ffccbc, #ffab91);
+  --accent-color: #d84315;
+  --text-color: #4e342e;
 }
 
-/* App Container Styling to Apply Moods */
+/* Winter Theme */
+.winter {
+  --bg-gradient: linear-gradient(135deg, #b3e5fc, #81d4fa);
+  --accent-color: #0288d1;
+  --text-color: #01579b;
+}
+
+/* App Container Styling to Apply Seasons */
 .App {
   background: var(--bg-gradient);
   color: var(--text-color);
   transition: background 0.5s ease, color 0.5s ease;
 }
 
-button, .theme-toggle button, .mood-buttons button {
+button, .season-buttons button {
   background-color: var(--accent-color);
   color: var(--text-color);
   transition: background-color 0.3s, color 0.3s;

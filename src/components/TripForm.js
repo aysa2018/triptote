@@ -51,6 +51,10 @@ function TripForm({ onTripSubmit }) {
         <option value="friends">Friends Trip</option>
         <option value="camping">Camping</option>
         <option value="road-trip">Road Trip</option>
+        <option value="culture">Culture</option>
+        <option value="adventure">Adventure</option>
+        <option value="spiritual">Spiritual</option>
+        <option value="luxury">Luxury</option>
       </select>
 
       <motion.button

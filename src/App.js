@@ -111,7 +111,10 @@ function App() {
 
   return (
     <div className={`App ${season}`} data-season={season}>
-      <Header />
+      {/* Pass the season prop to Header here */}
+      <Header season={season} />
+      
+      {/* Season selection buttons */}
       <div className="season-buttons">
         <motion.button
           whileHover={{ scale: 1.1 }}
@@ -138,11 +141,14 @@ function App() {
           Winter
         </motion.button>
       </div>
-      <TripForm onTripSubmit={generatePackingList} /> {/* Pass generatePackingList */}
-      <WeatherInfo weatherData={weatherData} hasFetchedWeather={hasFetchedWeather} /> {/* Pass weatherData */}
-      <PackingList packingList={packingList} /> {/* Pass packingList */}
+  
+      {/* Other components */}
+      <TripForm onTripSubmit={generatePackingList} />
+      <WeatherInfo weatherData={weatherData} hasFetchedWeather={hasFetchedWeather} />
+      <PackingList packingList={packingList} />
     </div>
   );
+  
   
 }
 

@@ -1,9 +1,10 @@
 // src/components/Header.js
+
 import React from 'react';
 
-function Header() {
+function Header({ season }) {
   return (
-    <header>
+    <header className={`header ${season}`}>
       <h1>TripTote</h1>
       <p>Your ultimate packing assistant for stress-free travel!</p>
     </header>
@@ -11,3 +12,4 @@ function Header() {
 }
 
 export default Header;
+

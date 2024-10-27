@@ -1,16 +1,16 @@
 
-# TripTote
+# TripTote 🧳
 
-## Project Description
+## Project Description 
 
 The **TripTote** is a modern, interactive web application designed to make travel planning easier. By generating a packing list tailored to specific trip types and incorporating live weather data, it provides a highly personalized travel preparation experience. With options for mood-based themes, light and dark modes, and micro-interactions for an engaging user interface, this app helps users remember essential items and plan based on destination conditions.
 
 ### Problem It Solves
 
 Many people find packing for trips stressful, often forgetting items or struggling to decide what to pack based on factors like destination, trip type, and weather. The Packing Helper App solves this problem by:
-1. Generating a packing list based on the trip type (e.g., beach, city, hiking, business etc).
-2. Integrating real-time weather data to suggest items based on the destination’s forecast.
-3. Offering a user-friendly, visually appealing interface with mood themes to make packing a more enjoyable process.
+1. Generating a packing list based on the trip type (e.g., beach, city, hiking, business etc).🕶️ 👕 
+2. Integrating real-time weather data to suggest items based on the destination’s forecast.🌞 🌧️ 
+3. Offering a user-friendly, visually appealing interface with mood themes to make packing a more enjoyable process.🗺️ 🧭 
 
 ## Setup and Run Instructions
 

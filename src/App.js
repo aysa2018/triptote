@@ -1,4 +1,4 @@
-// src/App.js
+// Importing necessary modules and components
 import React, { useState } from 'react';
 import './App.css';
 import { motion } from 'framer-motion';
@@ -8,30 +8,34 @@ import PackingList from './components/PackingList';
 import WeatherInfo from './components/WeatherInfo';
 
 function App() {
+  // State to manage packing list categories
   const [packingList, setPackingList] = useState({
     fundamentals: [],
     clothing: [],
     toiletries: [],
     extras: []
   });
+  // State to manage fetched weather data
   const [weatherData, setWeatherData] = useState(null);
+   // State to track if weather has been fetched for the destination
   const [hasFetchedWeather, setHasFetchedWeather] = useState(false);
 
   const generatePackingList = ({ destination, startDate, endDate, tripType }) => {
-    setHasFetchedWeather(true);
+    setHasFetchedWeather(true);// Mark weather as fetched to avoid multiple fetches
 
+    // Basic essentials every traveler should bring
     const fundamentals = [
       "Passport/ID", "Wallet", "Phone", "Charger", "Reusable Water Bottle",
       "Medications", "Sunglasses", "Face Mask", "Hand Sanitizer"
     ];
-
+    // Basic clothing items needed for any trip
     const clothing = ["T-Shirts", "Pants/Shorts", "Jacket", "Underwear", "Socks"];
-
+    // Basic toiletries for personal hygiene
     const toiletries = ["Toothbrush", "Toothpaste", "Shampoo", "Body Wash", "Deodorant", "Conditioner"];
-
+    // Placeholder for items specific to the trip type
     let extras = [];
 
-    // Add items based on trip type
+    // Switch statement to add specific items to 'extras' based on trip type
     switch (tripType) {
       case "beach":
         extras = ["Swimsuit", "Beach Towel", "Sunscreen", "Flip Flops", "Sun hat", ];
@@ -69,20 +73,22 @@ function App() {
       case "luxury":
         extras = ["Designer Outfits", "Travel-Size Spa Kit", "Portable Steamer", "Luxury Sunglasses", "Fine Dining Outfits", "Portable Charger", "High-end Camera"];
         break;
-      
+      // Default to empty if no specific trip type matches
       default:
         extras = [];
     }
-
+    // Update state with the generated packing list
     setPackingList({ fundamentals, clothing, toiletries, extras });
     fetchWeather(destination); // Fetch weather data after generating packing list
   };
 
   const fetchWeather = (destination) => {
+    // Fetch weather data using the Tomorrow.io API and provided destination
     fetch(`https://api.tomorrow.io/v4/timelines?location=${destination}&fields=temperature&timesteps=1d&units=metric&apikey=${process.env.REACT_APP_TOMORROW_API_KEY}`)
       .then(response => response.json())
       .then(data => {
         if (data.data && data.data.timelines.length > 0) {
+          // Extract temperature data and format it
           const weatherInfo = data.data.timelines[0].intervals[0].values;
           setWeatherData({
             date: new Date().toLocaleDateString(),
@@ -90,11 +96,13 @@ function App() {
             temp: weatherInfo.temperature.toFixed(1),
           });
         } else {
+          // Log error if weather data is unavailable
           console.error('Weather data not available for this location.');
           setWeatherData(null);
         }
       })
       .catch(error => {
+        // Handle and log any fetch errors
         console.error('Error fetching the weather data:', error);
         setWeatherData(null);
       });
@@ -111,10 +119,7 @@ function App() {
 
   return (
     <div className={`App ${season}`} data-season={season}>
-      {/* Pass the season prop to Header here */}
       <Header season={season} />
-      
-      {/* Season selection buttons */}
       <div className="season-buttons">
         <motion.button
           whileHover={{ scale: 1.1 }}
@@ -148,6 +153,7 @@ function App() {
       <PackingList packingList={packingList} />
     </div>
   );
+  
   
   
 }

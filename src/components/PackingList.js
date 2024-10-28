@@ -9,7 +9,7 @@ function PackingList({ packingList }) {
       <section>
         <h3>Fundamentals</h3>
         <ul>
-          {packingList.fundamentals && packingList.fundamentals.map((item, index) => (
+          {packingList.fundamentals.map((item, index) => (
             <li key={index}>
               <input type="checkbox" />
               <label>{item}</label>
@@ -21,7 +21,7 @@ function PackingList({ packingList }) {
       <section>
         <h3>Clothing</h3>
         <ul>
-          {packingList.clothing && packingList.clothing.map((item, index) => (
+          {packingList.clothing.map((item, index) => (
             <li key={index}>
               <input type="checkbox" />
               <label>{item}</label>
@@ -33,7 +33,7 @@ function PackingList({ packingList }) {
       <section>
         <h3>Toiletries</h3>
         <ul>
-          {packingList.toiletries && packingList.toiletries.map((item, index) => (
+          {packingList.toiletries.map((item, index) => (
             <li key={index}>
               <input type="checkbox" />
               <label>{item}</label>
@@ -45,7 +45,7 @@ function PackingList({ packingList }) {
       <section>
         <h3>Extras</h3>
         <ul>
-          {packingList.extras && packingList.extras.map((item, index) => (
+          {packingList.extras.map((item, index) => (
             <li key={index}>
               <input type="checkbox" />
               <label>{item}</label>
